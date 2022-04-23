@@ -8,55 +8,58 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TestClient</artifactId>
-    <packaging>jar</packaging>
     <name>TestClient</name>
+    <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <node.version>v16.14.2</node.version>
+        <version.wildfly>26.1.0.Final</version.wildfly>
     </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>gulp</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <echo message="Gulp!"/>
-                                <exec executable="gulp">
-                                    <arg value="build"/>
-                                </exec>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>
+                    <warSourceDirectory>${project.basedir}/webapp</warSourceDirectory>
+                </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.12.1</version>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
+                        <id>install node and npm</id>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/META-INF/resources</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>dest</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
+                            <arguments>run build</arguments>
+                            <environmentVariables>
+                                <BUILD_PATH>${project.build.directory}/${project.build.finalName}</BUILD_PATH>
+                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <nodeVersion>${node.version}</nodeVersion>
+                    <installDirectory>target</installDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

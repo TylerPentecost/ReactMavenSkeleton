@@ -5,8 +5,7 @@ var reactify = require('reactify');
 
 gulp.task('browserify', function () {
     return browserify('./app/index.jsx', {
-        debug: true,
-        transform: [reactify]
+        debug: true, transform: [reactify]
     })
         .bundle()
         .pipe(source('bundle.js'))
@@ -26,4 +25,3 @@ gulp.task('watch', ['build'], function () {
     gulp.watch(['./app/**/*.jsx', './app/**/*.js'], ['browserify']);
     gulp.watch(['./assets/**/*.html'], ['html']);
 });
-

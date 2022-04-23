@@ -6,7 +6,7 @@ var App = React.createClass({
         return (
             <div>
                 <h1>React.js</h1>
-                <Greet />
+                <Greet/>
             </div>
         );
     }

@@ -309,5 +309,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,windows,intellij,node,react
-
-node/

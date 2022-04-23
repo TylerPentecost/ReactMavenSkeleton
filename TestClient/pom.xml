@@ -40,6 +40,9 @@
                         </goals>
                         <configuration>
                             <arguments>run build</arguments>
+                            <environmentVariables>
+                                <BUILD_PATH>target/build</BUILD_PATH>
+                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>
@@ -59,10 +62,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/META-INF/resources</outputDirectory>
+                            <outputDirectory>${basedir}/target/${project.build.finalName}</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>dest</directory>
+                                    <directory>target/build</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>

@@ -28,4 +28,27 @@
             <type>war</type>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <modules>
+                        <webModule>
+                            <groupId>com.gmail.tyler8806</groupId>
+                            <artifactId>TestServer</artifactId>
+                            <contextRoot>/server</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>com.gmail.tyler8806</groupId>
+                            <artifactId>TestClient</artifactId>
+                            <contextRoot>/client</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

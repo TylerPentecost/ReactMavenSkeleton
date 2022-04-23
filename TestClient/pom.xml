@@ -8,14 +8,29 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TestClient</artifactId>
-    <packaging>war</packaging>
     <name>TestClient</name>
+    <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <node.version>v16.14.2</node.version>
+        <version.wildfly>26.1.0.Final</version.wildfly>
     </properties>
     <build>
+        <resources>
+            <resource>
+                <directory>webapp</directory>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>
+                    <warSourceDirectory>${project.basedir}/webapp</warSourceDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -41,7 +56,7 @@
                         <configuration>
                             <arguments>run build</arguments>
                             <environmentVariables>
-                                <BUILD_PATH>${basedir}/target/${project.build.finalName}</BUILD_PATH>
+                                <BUILD_PATH>${project.build.outputDirectory}</BUILD_PATH>
                             </environmentVariables>
                         </configuration>
                     </execution>
@@ -49,14 +64,6 @@
                 <configuration>
                     <nodeVersion>${node.version}</nodeVersion>
                     <installDirectory>target</installDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
         </plugins>
